@@ -42,10 +42,6 @@ You can watch the full video tutorial [here](https://www.youtube.com/watch?v=9Qq
 
 ### 1. Clone the repo
 
-```bash
-git clone https://github.com/mckaywrigley/chatbot-ui.git
-```
-
 ### 2. Install dependencies
 
 Open a terminal in the root directory of your local Chatbot UI repository and run:
