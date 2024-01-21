@@ -5,3 +5,4 @@ export type KeyTypeT =
   | "MISTRAL_API_KEY"
   | "PERPLEXITY_API_KEY"
   | "AZURE_OPENAI_API_KEY"
+  | "ALPHAI_API_KEY"

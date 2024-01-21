@@ -214,10 +214,16 @@ export const handleHostedChat = async (
   } else {
     formattedMessages = await buildFinalMessages(payload, profile, chatImages)
   }
+  
+  let jpurl = `/api/chat/${provider}`;
+  if(provider == 'alphai'){
+    jpurl = 'http://3.229.238.146:18888/v1/chat/completions'
+  }
 
   const response = await fetchChatResponse(
-    `/api/chat/${provider}`,
+    jpurl,
     {
+      "model":"openchat_3.5",
       chatSettings: payload.chatSettings,
       messages: formattedMessages,
       tools: []
@@ -282,6 +288,57 @@ export const processResponse = async (
   setChatMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>,
   setToolInUse: React.Dispatch<React.SetStateAction<string>>
 ) => {
+  let fullText = "";
+  let contentToAdd = "";
+
+  if (response.body) {
+    const jsonResponse = await response.json();
+    const messages = jsonResponse.choices || [];
+
+    for (let message of messages) {
+      if (message && message.message && message.message.content) {
+        contentToAdd = message.message.content;
+        fullText += contentToAdd;
+      }
+    }
+
+    setChatMessages(prev =>
+      prev.map(chatMessage => {
+        if (chatMessage.message.id === lastChatMessage.message.id) {
+          const updatedChatMessage: ChatMessage = {
+            message: {
+              ...chatMessage.message,
+              content: chatMessage.message.content + contentToAdd
+            },
+            fileItems: chatMessage.fileItems
+          };
+
+          return updatedChatMessage;
+        }
+        return chatMessage;
+      })
+    );
+    
+    setFirstTokenReceived(true);
+    setToolInUse("none");
+
+    return fullText;
+  } else {
+    throw new Error("Response body is null");
+  }
+}
+
+
+/*
+export const processResponse = async (
+  response: Response,
+  lastChatMessage: ChatMessage,
+  isHosted: boolean,
+  controller: AbortController,
+  setFirstTokenReceived: React.Dispatch<React.SetStateAction<boolean>>,
+  setChatMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>,
+  setToolInUse: React.Dispatch<React.SetStateAction<string>>
+) => {
   let fullText = ""
   let contentToAdd = ""
 
@@ -324,7 +381,7 @@ export const processResponse = async (
   } else {
     throw new Error("Response body is null")
   }
-}
+}*/
 
 export const handleCreateChat = async (
   chatSettings: ChatSettings,

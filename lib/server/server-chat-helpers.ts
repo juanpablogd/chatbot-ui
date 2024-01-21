@@ -46,7 +46,8 @@ function addApiKeysToProfile(profile: Tables<"profiles">) {
     [VALID_KEYS.MISTRAL_API_KEY]: "mistral_api_key",
     [VALID_KEYS.PERPLEXITY_API_KEY]: "perplexity_api_key",
     [VALID_KEYS.AZURE_OPENAI_API_KEY]: "azure_openai_api_key",
-    [VALID_KEYS.OPENROUTER_API_KEY]: "openrouter_api_key"
+    [VALID_KEYS.OPENROUTER_API_KEY]: "openrouter_api_key",
+    [VALID_KEYS.ALPHAI_API_KEY]: "alphai_api_key"
   }
 
   for (const [envKey, profileKey] of Object.entries(apiKeys)) {
@@ -60,6 +61,7 @@ function addApiKeysToProfile(profile: Tables<"profiles">) {
 
 export function checkApiKey(apiKey: string | null, keyName: string) {
   if (apiKey === null || apiKey === "") {
+    console.log((`${keyName} API Key not found`))
     throw new Error(`${keyName} API Key not found`)
   }
 }

@@ -17,6 +17,7 @@ interface APIStepProps {
   perplexityAPIKey: string
   useAzureOpenai: boolean
   openrouterAPIKey: string
+  alphaiAPIKey: string
   onOpenrouterAPIKeyChange: (value: string) => void
   onOpenaiAPIKeyChange: (value: string) => void
   onOpenaiOrgIDChange: (value: string) => void
@@ -29,7 +30,8 @@ interface APIStepProps {
   onGoogleGeminiAPIKeyChange: (value: string) => void
   onMistralAPIKeyChange: (value: string) => void
   onPerplexityAPIKeyChange: (value: string) => void
-  onUseAzureOpenaiChange: (value: boolean) => void
+  onUseAzureOpenaiChange: (value: boolean) => void,
+  onAlphaiAPIKeyChange: (value: string) => void
 }
 
 export const APIStep: FC<APIStepProps> = ({
@@ -46,6 +48,7 @@ export const APIStep: FC<APIStepProps> = ({
   perplexityAPIKey,
   openrouterAPIKey,
   useAzureOpenai,
+  alphaiAPIKey,
   onOpenaiAPIKeyChange,
   onOpenaiOrgIDChange,
   onAzureOpenaiAPIKeyChange,
@@ -58,7 +61,8 @@ export const APIStep: FC<APIStepProps> = ({
   onMistralAPIKeyChange,
   onPerplexityAPIKeyChange,
   onUseAzureOpenaiChange,
-  onOpenrouterAPIKeyChange
+  onOpenrouterAPIKeyChange,
+  onAlphaiAPIKeyChange
 }) => {
   return (
     <>
@@ -151,6 +155,17 @@ export const APIStep: FC<APIStepProps> = ({
             </div>
           </>
         )}
+      </div>
+
+      <div className="space-y-1">
+        <Label>Alphai API Key</Label>
+
+        <Input
+          placeholder="Alphai API Key"
+          type="password"
+          value={alphaiAPIKey}
+          onChange={e => onAlphaiAPIKeyChange(e.target.value)}
+        />
       </div>
 
       <div className="space-y-1">

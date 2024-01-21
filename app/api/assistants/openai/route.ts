@@ -7,7 +7,7 @@ export const runtime: ServerRuntime = "edge"
 export async function GET() {
   try {
     const profile = await getServerProfile()
-
+    console.log("OpenAI", profile)
     checkApiKey(profile.openai_api_key, "OpenAI")
 
     const openai = new OpenAI({

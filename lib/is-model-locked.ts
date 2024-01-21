@@ -49,6 +49,8 @@ export const isModelLocked = async (
       return !(isUsing || profile.perplexity_api_key)
     case "openrouter":
       return !(isUsing || profile.openrouter_api_key)
+    case "alphai":
+        return !(isUsing || profile.alphai_api_key)
     default:
       return false
   }
@@ -62,5 +64,6 @@ export const providerToKeyMap = {
   mistral: VALID_KEYS.MISTRAL_API_KEY,
   perplexity: VALID_KEYS.PERPLEXITY_API_KEY,
   openrouter: VALID_KEYS.OPENROUTER_API_KEY,
+  alphai: VALID_KEYS.ALPHAI_API_KEY,
   ollama: false
 }
